@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- roberto font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <!-- CSS page-->
+    <link rel="stylesheet" href="/style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="navBar">
+        <img src="/imags/pokedex_logo.svg" class="title">
+        <div class='navBar_button_div'>
+            <button class="navBar_button" id="Home">Home</button>
+            <button class="navBar_button" id="Favorites">Favorites</button>
+        </div>
+    </div>
+    <div id="search_bar">
+        <div style="position: relative;">
+            <input type="search" name="search" id="search" autocomplete="off">
+            <div id="search_history">
+            </div>
+        </div>
+        <button id="search_button">Search</button>
+    </div>
+    <div>
+        <div class="cards" id="pokedex_cards_grid"></div>
+    </div>
+    <br>
+    <center><button id="load_more">Load more...</button></center>
+    <script type="module" src="/main.js"></script>
+</body>
+</html>
