@@ -262,6 +262,9 @@ hr{
     color: #a3a4ac;
 
 }
+.name{
+    cursor: pointer;
+}
 
 @media (max-width:1170px) {
     .cards{

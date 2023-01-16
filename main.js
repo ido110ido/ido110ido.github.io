@@ -35,31 +35,33 @@ window.onload = function(){
     faivoritPageButton.classList.add('marked')
     HomePageButton.classList.remove('marked')
 }
+if(window.location.pathname === '/index.html') {
+    load_more.addEventListener('click',function(){
+        numberOfCard +=12
+        randerList(data)
+    })
+    search_bar.addEventListener('focus',function(){
+        search_history.style.display = 'flex'
+        recentSearch()
+    })
+    document.body.addEventListener('click',function(event){
+        if (!event.target.matches('.the_x') &&
+         !event.target.matches('#search') && 
+         !event.target.matches('.clear_button') && 
+         !event.target.matches('.name')) {
+                search_history.style.display = 'none'
+        }
+    
+    })
+    search_button.addEventListener('click',function(){
+        randerListBySearch(search_bar.value)
+        search_bar.value = ''
+    })
+    faivoritPageButton.addEventListener('click',function(){
+        window.location.href = "html/favorites.html";
+    })
+}
 
-faivoritPageButton.addEventListener('click',function(){
-    window.location.href = "html/favorites.html";
-
-})
-
-load_more.addEventListener('click',function(){
-    numberOfCard +=12
-    randerList(data)
-})
-
-search_bar.addEventListener('focus',function(){
-    search_history.style.display = 'flex'
-    recentSearch()
-})
-document.body.addEventListener('click',function(event){
-    if (!event.target.matches('.the_x') && !event.target.matches('#search') && !event.target.matches('.clear_button')) {
-            search_history.style.display = 'none'
-    }
-
-})
-search_button.addEventListener('click',function(){
-    randerListBySearch(search_bar.value)
-    search_bar.value = ''
-})
 
 function randerList(dataOfList){
     pokedex_cards.innerHTML = ''
@@ -111,7 +113,7 @@ export function basic_card(pokedex){
         return card
 }
     
-export function id_text_generator(id){
+function id_text_generator(id){
         if (id >= 100){
             return `#${id}`
         }
@@ -250,7 +252,8 @@ function isLiked(pokedex) {
 }
 
 function randerListBySearch(name){
-    let listOfMatch = data.filter((element) => element.name.english === name)
+    const search = name.charAt(0).toUpperCase() + name.slice(1);
+    let listOfMatch = data.filter((element) => element.name.english === search)
     if(listOfMatch.length == 0){
         if(name != 0){
             search_bar.setCustomValidity(`no mathch for: ${name}`)
@@ -258,9 +261,12 @@ function randerListBySearch(name){
         }
         randerList(data)
     }else{
-        recent.push(name)
-        localStorage.setItem("recent" , JSON.stringify(recent))
-        randerList(listOfMatch);  
+        if(recent.indexOf(name) === -1){
+            recent.push(search)
+            localStorage.setItem("recent" , JSON.stringify(recent))
+        }
+        randerList(listOfMatch);
+        search_history.style.display = 'none'
     } 
 }
 
@@ -285,7 +291,11 @@ function recentSearch(){
         let history_result = document.createElement('div')
         history_result.classList.add('history_result')
         let name = document.createElement('p')
+        name.classList.add('name')
         name.innerHTML = recent[i]
+        name.addEventListener('click',function(){
+            randerListBySearch(recent[i])
+        })
         let remove_name = document.createElement('p')
         remove_name.classList.add('the_x')
         remove_name.innerHTML = '&#10006'
